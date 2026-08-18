@@ -3,27 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spider-Man 3 Live Interactive Switch</title>
+    <title>Spider-Man 3 Live Switch</title>
     <style>
         :root { 
-            --bg-gradient: linear-gradient(135deg, #e3f2fd, #bbdefb); 
-            --card-bg: linear-gradient(145deg, #e53935, #b71c1c);
-            --shadow-color: rgba(229, 57, 53, 0.5);
-            --text-color: #1565c0;
-            --transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-
-        body.black-mode { 
-            --bg-gradient: linear-gradient(135deg, #0f0f0f, #1a002c); 
-            --card-bg: linear-gradient(145deg, #212121, #0a0a0a);
-            --shadow-color: rgba(123, 31, 162, 0.7);
-            --text-color: #ce93d8;
+            --bg-light: #e0f7fa; 
+            --bg-dark: #121212;
+            --shadow-red: rgba(229, 57, 53, 0.7);
+            --shadow-black: rgba(123, 31, 162, 0.8);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
         
         body { 
-            background: var(--bg-gradient); 
+            background: var(--bg-light); 
             height: 100vh; 
             display: flex; 
             flex-direction: column; 
@@ -31,145 +24,70 @@
             justify-content: center; 
             transition: var(--transition); 
             overflow: hidden; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
         }
 
-        /* Tanda Tangan Eksklusif By Mario di Pojok Kiri Atas */
+        body.black-mode { background: var(--bg-dark); }
+
         .credit {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--text-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            padding: 5px 15px; border-radius: 20px;
+            font-weight: bold; font-size: 14px; color: #333;
             transition: var(--transition);
-            border: 1px solid rgba(255,255,255,0.6);
         }
-        body.black-mode .credit { 
-            background: rgba(0, 0, 0, 0.4); 
-            border-color: rgba(255,255,255,0.1);
-        }
+        body.black-mode .credit { color: #fff; background: rgba(0, 0, 0, 0.5); }
 
-        /* Kartu Karakter Spider-Man Hidup (Berdenyut Dinamis) */
+        /* Kartu Foto Spider-Man Hidup */
         .hero-container {
-            width: 280px; 
-            height: 380px;
-            background: var(--card-bg);
-            border-radius: 32px;
+            width: 280px; height: 380px;
+            background-size: cover; background-position: center;
+            border-radius: 25px;
             transition: var(--transition);
-            box-shadow: 0 25px 50px var(--shadow-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            animation: liveFloat 3.5s ease-in-out infinite;
-            border: 3px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 35px var(--shadow-red);
+            animation: floatCard 3s ease-in-out infinite;
+            border: 3px solid rgba(255,255,255,0.3);
         }
 
-        @keyframes liveFloat { 
-            0%, 100% { transform: translateY(0) scale(1); } 
-            50% { transform: translateY(-10px) scale(1.02); } 
+        body.black-mode .hero-container {
+            box-shadow: 0 15px 35px var(--shadow-black);
+            border-color: rgba(123, 31, 162, 0.5);
         }
 
-        /* Topeng / Wajah Karakter */
-        .mask {
-            width: 130px; 
-            height: 170px;
-            background: #f44336;
-            border-radius: 50% 50% 45% 45%;
-            position: relative;
-            box-shadow: inset 0 -12px 25px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.2);
-            transition: var(--transition);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: breathe 2s ease-in-out infinite;
+        @keyframes floatCard { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-10px); } 
         }
 
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
-        body.black-mode .mask {
-            background: #181818;
-            box-shadow: inset 0 0 30px #4a148c, inset 0 -10px 20px rgba(0,0,0,0.8);
-        }
-
-        /* Mata Khas Tajam */
-        .eye {
-            position: absolute;
-            width: 42px; 
-            height: 26px;
-            background: #fff;
-            border-radius: 50% 20% 50% 20%;
-            top: 60px;
-            box-shadow: 0 0 12px rgba(255,255,255,0.9);
-            transform: rotate(-12deg);
-            transition: var(--transition);
-        }
-        .eye.right {
-            transform: scaleX(-1) rotate(-12deg);
-            right: 20px;
-        }
-        .eye.left { left: 20px; }
-
-        body.black-mode .eye {
-            background: #e0f7fa;
-            box-shadow: 0 0 18px #ab47bc;
-        }
-
-        /* Label Mode Teks di Dalam Kartu */
-        .title-text {
-            margin-top: 25px;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-            transition: var(--transition);
-        }
-
-        /* Tombol Switch (Di Bawah, Ukuran Sedang & Elegan) */
+        /* Tombol Switch Kecil di Bawah */
         .switch-wrapper {
-            margin-top: 35px;
-            width: 80px; 
-            height: 36px;
-            background: rgba(0, 0, 0, 0.15);
+            margin-top: 40px;
+            width: 75px; height: 34px;
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 20px;
-            display: flex; 
-            align-items: center;
-            padding: 3px; 
-            cursor: pointer;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.3);
+            display: flex; align-items: center;
+            padding: 3px; cursor: pointer;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.4);
             transition: var(--transition);
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255,255,255,0.4);
         }
 
         body.black-mode .switch-wrapper {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(171, 71, 188, 0.5);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .toggle-btn {
-            width: 26px; 
-            height: 26px;
-            background: #ffffff;
+            width: 24px; height: 24px;
+            background: #ff1744;
             border-radius: 50%;
             transition: var(--transition);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
         }
 
         body.black-mode .toggle-btn { 
-            transform: translateX(44px); 
-            background: #e1bee7;
+            transform: translateX(41px); 
+            background: #ab47bc;
         }
     </style>
 </head>
@@ -177,31 +95,42 @@
 
     <div class="credit">By Mario</div>
 
-    <div class="hero-container" id="heroCard">
-        <div class="mask">
-            <div class="eye left"></div>
-            <div class="eye right"></div>
-        </div>
-        <div class="title-text" id="heroTitle">Classic Suit</div>
-    </div>
+    <div class="hero-container" id="hero"></div>
     
     <div class="switch-wrapper" onclick="toggleMode()">
         <div class="toggle-btn"></div>
     </div>
 
     <script>
+        const hero = document.getElementById('hero');
         const body = document.body;
-        const heroTitle = document.getElementById('heroTitle');
+
+        // Kumpulan nama file foto Spider-Man kamu di GitHub
+        // (Pastikan nama file gambarnya persis sama dengan yang kamu upload!)
+        const redImages = [
+            "1000257360.jpg", 
+            "1000257358.jpg", 
+            "1000257359.jpg"
+        ];
+        
+        const blackImages = [
+            "1000257356.jpg", 
+            "1000257355.jpg", 
+            "1000257352.jpg"
+        ];
 
         function toggleMode() {
             body.classList.toggle('black-mode');
             
-            if(body.classList.contains('black-mode')) {
-                heroTitle.innerText = "Symbiote Suit";
-            } else {
-                heroTitle.innerText = "Classic Suit";
-            }
+            // Ambil gambar acak dari array sesuai mode
+            const list = body.classList.contains('black-mode') ? blackImages : redImages;
+            const randomImg = list[Math.floor(Math.random() * list.length)];
+            
+            hero.style.backgroundImage = `url('${randomImg}')`;
         }
+
+        // Set awal pas pertama kali kebuka (Mode Merah-Biru)
+        hero.style.backgroundImage = `url('${redImages[0]}')`;
     </script>
 </body>
 </html>
