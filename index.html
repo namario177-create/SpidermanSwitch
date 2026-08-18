@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man Switch Mode</title>
+    <style>
+        :root { --bg: #e1f5fe; --accent: #d32f2f; --transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        body.black-mode { --bg: #121212; --accent: #4a148c; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg); 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            font-family: sans-serif;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .credit { position: absolute; top: 20px; left: 20px; color: #fff; font-weight: bold; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; }
+
+        .hero-container {
+            width: 300px; height: 400px;
+            background-size: cover; background-position: center;
+            border-radius: 30px;
+            transition: var(--transition);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* Tombol Switch */
+        .switch-wrapper {
+            margin-top: 50px;
+            width: 120px; height: 50px;
+            background: #333;
+            border-radius: 25px;
+            display: flex; align-items: center;
+            padding: 5px; cursor: pointer;
+            position: relative;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+        }
+
+        .toggle-btn {
+            width: 40px; height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        body.black-mode .toggle-btn { transform: translateX(70px); }
+
+    </style>
+</head>
+<body>
+    <div class="credit">By Mario</div>
+    <div class="hero-container" id="hero"></div>
+    
+    <div class="switch-wrapper" onclick="toggleMode()">
+        <div class="toggle-btn"></div>
+    </div>
+
+    <script>
+        const hero = document.getElementById('hero');
+        const body = document.body;
+
+        function toggleMode() {
+            body.classList.toggle('black-mode');
+            updateVisuals();
+        }
+
+        function updateVisuals() {
+            // Logika ganti gambar dan efek akan berjalan di sini
+            if(body.classList.contains('black-mode')) {
+                hero.style.boxShadow = "0 0 50px #4a148c";
+            } else {
+                hero.style.boxShadow = "0 0 50px #d32f2f";
+            }
+        }
+    </script>
+</body>
+</html>
